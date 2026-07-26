@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convite de Aniversário</title>
+    <!-- Bootstrap para um visual limpo e responsivo -->
+    <link href="https://jsdelivr.net" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f7f9fc;
+      }
+      .card-convite {
+        max-width: 600px;
+        margin: 50px auto;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .btn-confirmar {
+        background-color: #6f42c1;
+        color: white;
+      }
+      .btn-confirmar:hover {
+        background-color: #59359a;
+        color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="card card-convite p-4 bg-white">
+        <div class="text-center mb-4">
+          <h1 class="display-6 text-purple">🎉 Meu Aniversário 🎉</h1>
+          <p class="text-muted">
+            Confirme sua presença preenchendo os dados abaixo
+          </p>
+        </div>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <!-- Nome da Família -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">{{ form.familia.label }}</label>
+            {{ form.familia }}
+          </div>
+
+          <!-- Resposta Radio Select -->
+          <div class="mb-3">
+            <label class="form-label fw-bold">{{ form.confirmou.label }}</label>
+            <div class="d-flex gap-3">
+              {% for radio in form.confirmou %}
+              <div class="form-check">
+                {{ radio.tag }}
+                <label class="form-check-label">{{ radio.choice_label }}</label>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <!-- Quantidade de acompanhantes -->
+          <div class="mb-3">
+            <label class="form-label fw-bold"
+              >{{ form.acompanhantes.label }}</label
+            >
+            {{ form.acompanhantes }}
+          </div>
+
+          <!-- Nome dos acompanhantes -->
+          <div class="mb-4">
+            <label class="form-label fw-bold"
+              >{{ form.nomes_acompanhantes.label }}</label
+            >
+            {{ form.nomes_acompanhantes }}
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-confirmar btn-lg">
+              Enviar Resposta
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="https://jsdelivr.net"></script>
+  </body>
+</html>

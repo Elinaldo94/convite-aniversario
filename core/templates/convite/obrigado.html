@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Obrigado pela Resposta</title>
+    <!-- Bootstrap para manter a consistência visual -->
+    <link href="https://jsdelivr.net" rel="stylesheet" />
+    <style>
+      body {
+        background-color: #f7f9fc;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .card-obrigado {
+        max-width: 500px;
+        text-center: center;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .icon-sucesso {
+        font-size: 4rem;
+        color: #198754;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container text-center">
+      <div class="card card-obrigado p-5 mx-auto bg-white">
+        <div class="icon-sucesso mb-3">✓</div>
+        <h1 class="display-6 mb-3">Resposta Recebida!</h1>
+        <p class="text-muted mb-4">
+          Obrigado por confirmar sua presença. Seus dados foram salvos com
+          sucesso na nossa lista de convidados.
+        </p>
+        <div class="d-grid">
+          <a href="{% url 'convite_form' %}" class="btn btn-outline-secondary">
+            Enviar outra resposta
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://jsdelivr.net"></script>
+  </body>
+</html>

@@ -1,5 +1,6 @@
 from django.apps import AppConfig
 
-
-class CoreConfig(AppConfig):
-    name = 'core'
+class ConviteConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "core"
+    verbose_name = "Sistema de Convite"
