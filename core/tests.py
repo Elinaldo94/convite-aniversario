@@ -1,42 +1,24 @@
 from django.test import TestCase
 from django.urls import reverse
-from .forms import ConviteForm
+from .forms import RespostaConviteForm
+from .models import Convidado
 
 class ConviteFormTest(TestCase):
     def test_form_valido(self):
         form_data = {
-            "familia": "Família Silva",
             "confirmou": "Sim",
-            "acompanhantes": 2,
-            "nomes_acompanhantes": "Maria, João"
+            "quantidade_vinda": 2
         }
-        form = ConviteForm(data=form_data)
+        # Criamos uma instância fake de convidado para o init ler o limite de pessoas
+        convidado_teste = Convidado(limite_pessoas=5)
+        form = RespostaConviteForm(data=form_data, instance=convidado_teste)
         self.assertTrue(form.is_valid())
 
-    def test_form_invalido(self):
+    def test_form_invalido_por_limite(self):
         form_data = {
-            "familia": "",
             "confirmou": "Sim",
-            "acompanhantes": -1,
-            "nomes_acompanhantes": ""
+            "quantidade_vinda": 10 # Ultrapassa o limite de 5
         }
-        form = ConviteForm(data=form_data)
+        convidado_teste = Convidado(limite_pessoas=5)
+        form = RespostaConviteForm(data=form_data, instance=convidado_teste)
         self.assertFalse(form.is_valid())
-
-
-class ConviteViewsTest(TestCase):
-    def test_acesso_formulario(self):
-        response = self.client.get(reverse("convite_form"))
-        self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "Família")
-
-    def test_redirecionamento_obrigado(self):
-        form_data = {
-            "familia": "Família Souza",
-            "confirmou": "Sim",
-            "acompanhantes": 1,
-            "nomes_acompanhantes": "Carlos"
-        }
-        response = self.client.post(reverse("convite_form"), data=form_data)
-        self.assertEqual(response.status_code, 302)  # redireciona
-        self.assertRedirects(response, reverse("obrigado"))

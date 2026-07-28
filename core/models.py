@@ -24,11 +24,6 @@ class Convidado(models.Model):
         default=0,
         verbose_name="Quantas pessoas realmente vão"
     )
-    nomes_acompanhantes = models.TextField(
-        blank=True,
-        null=True,
-        verbose_name="Nomes das pessoas que vão"
-    )
 
     def __str__(self):
         return f"{self.nome_grupo} (Código: {self.codigo_acesso})"

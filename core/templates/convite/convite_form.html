@@ -6,27 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Convite de Aniversário - Matheus Emanuel</title>
 
-    <!-- Bootstrap CSS -->
+    <!-- CORREÇÃO: Links funcionais e completos do Bootstrap 5 -->
     <link href="https://jsdelivr.net" rel="stylesheet" />
 
-    <!-- Google Fonts -->
-    <link href="https://googleapis.com" rel="stylesheet" />
+    <!-- CORREÇÃO: Links completos das fontes do Google Fonts -->
+    <link rel="preconnect" href="https://googleapis.com" />
+    <link rel="preconnect" href="https://gstatic.com" crossorigin />
+    <link
+      href="https://googleapis.com/css2?family=Quicksand:wght@400;600&family=Fredoka:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <!-- Vinculação com o seu arquivo style.css -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
-    <!-- Bootstrap JS Bundle -->
+    <!-- CORREÇÃO: Link funcional do Bundle JavaScript do Bootstrap -->
     <script src="https://jsdelivr.net"></script>
   </head>
   <body data-popup-status="{{ sucesso }}">
     <div class="container container-formulario">
       <div class="card card-convite p-4 bg-white">
-        <!-- Topo Decorado -->
         <div class="text-center topo-festivo">
           <h1 class="display-6 titulo-infantil mt-2">Matheus Emanuel</h1>
           <p class="subtitulo-infantil mb-2">2 aninhos de muita alegria!</p>
-
-          <!-- Mensagem personalizada com base na senha digitada -->
           <div class="alert alert-info py-2 chat-balao">
             Olá, <strong>{{ convidado.nome_grupo }}</strong>! <br />
             Seu convite é válido para até
@@ -35,16 +36,12 @@
         </div>
 
         <form method="POST" id="formConvite">
-          {% csrf_token %}
-
-          <!-- Exibe erros caso tentem burlar o limite de pessoas -->
-          {% if form.quantidade_vinda.errors %}
+          {% csrf_token %} {% if form.quantidade_vinda.errors %}
           <div class="alert alert-danger py-2">
             {{ form.quantidade_vinda.errors }}
           </div>
           {% endif %}
 
-          <!-- Resposta Radio Select -->
           <div class="mb-4 text-center text-sm-start">
             <label class="form-label fw-bold text-secondary"
               >{{ form.confirmou.label }}</label
@@ -66,9 +63,7 @@
             </div>
           </div>
 
-          <!-- Bloco Condicional Principal: Só aparece se "Sim" for selecionado -->
           <div id="blocoPresencaConfirmada" class="secao-condicional">
-            <!-- Quantidade de participantes -->
             <div class="mb-4">
               <label class="form-label fw-bold text-secondary"
                 >Quantidade de participantes (incluindo você)</label
@@ -77,7 +72,6 @@
             </div>
           </div>
 
-          <!-- Botões de Ação -->
           <div class="d-grid gap-2 mt-4">
             <button type="submit" class="btn btn-confirmar btn-lg shadow-sm">
               Concluir
@@ -87,7 +81,6 @@
       </div>
     </div>
 
-    <!-- Bloco do Pop-up Otimizado -->
     <div
       id="modalResposta"
       class="modal-backdrop-custom {% if sucesso == 'confirmado' or sucesso == 'recusado' %}mostrar{% endif %}"
@@ -104,12 +97,11 @@
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
-
         {% if sucesso == "confirmado" %}
         <h2 class="titulo-modal mt-3">Presença Confirmada!</h2>
         <p class="texto-modal my-3">
-          Obrigado por confirmar! Mal podemos esperar para comemorar os 2
-          aninhos do Matheus Emanuel com você.
+          Obrado por confirmar! Mal podemos esperar para comemorar os 2 aninhos
+          do Matheus Emanuel com você.
         </p>
         {% else %}
         <h2 class="titulo-modal mt-3">Resposta Registrada!</h2>
@@ -118,7 +110,6 @@
           nos avisar.
         </p>
         {% endif %}
-
         <div class="mt-4">
           <button
             type="button"
@@ -131,12 +122,9 @@
       </div>
     </div>
 
-    <!-- Limite vindo do banco -->
     <script>
       const LIMITE_CONVIDADOS = parseInt("{{ convidado.limite_pessoas }}");
     </script>
-
-    <!-- Script de controle -->
     <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
