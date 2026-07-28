@@ -2,6 +2,6 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.convite_form, name="convite_form"),
-    path("obrigado/", views.obrigado, name="obrigado"),
+    path("", views.tela_acesso, name="tela_acesso"),
+    path("confirmar/", views.convite_view, name="convite_form"),
 ]

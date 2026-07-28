@@ -1,0 +1,319 @@
+/* ==========================================================================
+   Configurações Globais do Corpo da Página
+   ========================================================================== */
+body {
+  background-color: #f4fbf7; /* IHC: Ajustado para melhorar o contraste com o card branco */
+  font-family: "Quicksand", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 1.5rem;
+  -webkit-font-smoothing: antialiased; /* UI: Deixa as fontes mais nítidas em telas de alta resolução */
+}
+
+/* Limitador de largura exclusivo para as caixinhas de formulário */
+.container-formulario,
+.container-login {
+  max-width: 480px; /* UX: Reduzido de 520px para 480px para melhor escaneabilidade de leitura */
+  width: 100%;
+}
+
+/* ==========================================================================
+   Cartões do Convite e Telas (Customizados para não quebrar o Bootstrap nativo)
+   ========================================================================== */
+.card-convite,
+.card-login {
+  border-radius: 24px !important;
+  border: none !important;
+  /* UI: Sombra suavizada (blur maior, opacidade menor) para dar sensação real de elevação física (Soft UI) */
+  box-shadow:
+    0 20px 40px rgba(107, 33, 168, 0.06),
+    0 1px 3px rgba(0, 0, 0, 0.02);
+  background-color: #ffffff;
+  padding: 2rem !important; /* UX: Aumentado o respiro interno para diminuir a carga cognitiva */
+  width: 100%;
+}
+
+.topo-login {
+  margin-bottom: 1.5rem;
+}
+
+/* Faixa Colorida Superior (Formulário Principal) */
+.topo-festivo {
+  /* UI: Gradiente atualizado com cores mais vivas e alegres, mantendo o tom infantil sutil */
+  background: linear-gradient(135deg, #e0f2fe 0%, #f3e8ff 50%, #fae8ff 100%);
+  border-radius: 24px 24px 0 0;
+  margin: -2rem -2rem 2rem -2rem; /* Ajustado para casar perfeitamente com o novo padding do card */
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.emoji-topo {
+  font-size: 2.5rem;
+  display: inline-block;
+  animation: balancoEmoji 2.5s ease-in-out infinite; /* IHC: Microinteração lúdica de boas-vindas */
+}
+
+@keyframes balancoEmoji {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(15deg);
+  }
+}
+
+.titulo-infantil {
+  font-family: "Fredoka", sans-serif;
+  color: #6b21a8;
+  font-weight: 600;
+  letter-spacing: -0.5px; /* UI: Títulos pesados ficam melhores levemente compactados */
+}
+
+.subtitulo-infantil {
+  color: #475569; /* Acessibilidade: Escurecido de #64748b para garantir taxa de contraste WCAG */
+  font-weight: 500;
+}
+
+/* Balão de alerta/boas-vindas */
+.alert-info,
+.chat-balao {
+  background-color: #f0f9ff !important; /* UI: Tom mais suave */
+  border: 1px solid #bae6fd !important;
+  color: #0369a1 !important;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+/* ==========================================================================
+   Customização de Formulários e Inputs
+   ========================================================================== */
+form input[type="text"],
+form select,
+form textarea,
+form input[type="number"] {
+  width: 100%;
+  border-radius: 14px !important; /* UI: Bordas mais amigáveis e conversacionais */
+  border: 2px solid #e2e8f0 !important;
+  padding: 0.75rem 1.2rem !important; /* UX: Área de toque (Fitts's Law) expandida para facilitar cliques */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* IHC: Transição suave de estado */
+  box-sizing: border-box;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+/* Efeito de foco ao clicar nos campos */
+form input[type="text"]:focus,
+form select:focus,
+form textarea:focus,
+form input[type="number"]:focus {
+  border-color: #a78bfa !important;
+  /* IHC: Brilho de foco limpo e sem aspecto "borrado" antigo */
+  box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.25) !important;
+  outline: none;
+  background-color: #fff;
+}
+
+/* Força o input da tela de acesso a ficar em caixa alta */
+form input[type="text"]#id_codigo {
+  text-transform: uppercase;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 4px; /* UX: Aumentado o espaçamento para facilitar a leitura de códigos mistos */
+  font-size: 1.25rem;
+}
+
+/* Customização dos botões tipo Rádio (Sim/Não) */
+.campo-radio-custom {
+  background-color: #f8fafc;
+  padding: 0.75rem 1.2rem;
+  border-radius: 14px;
+  border: 2px solid #e2e8f0; /* Mudado para 2px para alinhar perfeitamente com os inputs comuns */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.campo-radio-custom:hover {
+  background-color: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* IHC: Feedback visual claro caso o botão de rádio esteja ativo/selecionado via JS */
+.campo-radio-custom.ativo {
+  background-color: #f5f3ff;
+  border-color: #a78bfa;
+  color: #6b21a8;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Botões de Ação
+   ========================================================================== */
+.btn-confirmar,
+.btn-primary,
+.botao-confirmar {
+  background: linear-gradient(
+    135deg,
+    #a78bfa 0%,
+    #8b5cf6 100%
+  ) !important; /* UI: Botão com gradiente sutil atrai o clique (CTA) */
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 1rem !important; /* UX: Botão robusto, excelente para uso em celulares */
+  font-weight: 700 !important;
+  font-family: "Fredoka", sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2); /* UI: Botão flutuante */
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-confirmar:hover,
+.btn-primary:hover,
+.botao-confirmar:hover {
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.35);
+  transform: translateY(-2px); /* IHC: Sensação física de clique reativo */
+}
+
+.btn-confirmar:active,
+.btn-primary:active,
+.botao-confirmar:active {
+  transform: translateY(0); /* IHC: Feedback táctil visual ao pressionar */
+}
+
+/* Botão de Limpar Tudo */
+.btn-limpar {
+  color: #64748b; /* Acessibilidade: Escurecido para legibilidade */
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none; /* UI: Remove o sublinhado fixo poluído */
+  border-bottom: 2px dashed #cbd5e1; /* UI: Estilo link alternativo elegante */
+  transition: all 0.2s;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+.btn-limpar:hover {
+  color: #ef4444; /* IHC: Alerta de ação destrutiva (limpar) em vermelho */
+  border-bottom-color: #fca5a5;
+}
+
+/* Ocultação inicial dos blocos condicionais */
+.secao-condicional {
+  display: none;
+}
+
+/* ==========================================================================
+   Estrutura do Pop-up / Modal de Feedback (REVISADO E UNIFICADO)
+   ========================================================================== */
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(
+    15,
+    23,
+    42,
+    0.4
+  ); /* UI: Filtro escuro azulado moderno em vez de preto puro */
+  backdrop-filter: blur(
+    8px
+  ); /* IHC/UI: Efeito de vidro desfocado isola o contexto mental do modal */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0.3s;
+}
+
+.modal-backdrop-custom.mostrar {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Caixa branca interna do pop-up */
+.card-modal-feedback {
+  background-color: #ffffff;
+  border-radius: 28px; /* UI: Cantos mais arredondados no modal combinam com o tom infantil */
+  max-width: 400px; /* Reduzido de 440px para focar o conteúdo centralizado */
+  width: 90%;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  transform: scale(0.9) translateY(20px); /* IHC: Animação inteligente de "surgir de baixo" */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); /* Efeito elástico "Bounce" premium */
+  padding: 2.5rem 2rem !important;
+  text-align: center;
+}
+
+.modal-backdrop-custom.mostrar .card-modal-feedback {
+  transform: scale(1) translateY(0);
+}
+
+/* Título e textos internos do Modal */
+.titulo-modal {
+  font-family: "Fredoka", sans-serif;
+  color: #4c1d95;
+  font-weight: 700;
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.texto-modal {
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Wrapper e animação do Ícone de Sucesso */
+.icone-sucesso-wrapper {
+  background-color: #f0fdf4;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem auto;
+  animation: pulsoVerde 2s infinite; /* IHC: Chama a atenção positivamente para o sucesso */
+}
+
+@keyframes pulsoVerde {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(34, 197, 94, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.icone-sucesso {
+  width: 46px;
+  height: 46px;
+  color: #16a34a;
+}
+
+/* Botão específico de fechar o Modal */
+.botao-modal-fechar {
+  width: 100%;
+  margin-top: 1.5rem;
+}

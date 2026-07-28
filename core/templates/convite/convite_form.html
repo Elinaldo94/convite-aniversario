@@ -1,88 +1,142 @@
+{% load static %}
 <!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Convite de Aniversário</title>
-    <!-- Bootstrap para um visual limpo e responsivo -->
+    <title>Convite de Aniversário - Matheus Emanuel</title>
+
+    <!-- Bootstrap CSS -->
     <link href="https://jsdelivr.net" rel="stylesheet" />
-    <style>
-      body {
-        background-color: #f7f9fc;
-      }
-      .card-convite {
-        max-width: 600px;
-        margin: 50px auto;
-        border-radius: 15px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-      }
-      .btn-confirmar {
-        background-color: #6f42c1;
-        color: white;
-      }
-      .btn-confirmar:hover {
-        background-color: #59359a;
-        color: white;
-      }
-    </style>
+
+    <!-- Google Fonts -->
+    <link href="https://googleapis.com" rel="stylesheet" />
+
+    <!-- Vinculação com o seu arquivo style.css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://jsdelivr.net"></script>
   </head>
-  <body>
-    <div class="container">
+  <body data-popup-status="{{ sucesso }}">
+    <div class="container container-formulario">
       <div class="card card-convite p-4 bg-white">
-        <div class="text-center mb-4">
-          <h1 class="display-6 text-purple">🎉 Meu Aniversário 🎉</h1>
-          <p class="text-muted">
-            Confirme sua presença preenchendo os dados abaixo
-          </p>
+        <!-- Topo Decorado -->
+        <div class="text-center topo-festivo">
+          <h1 class="display-6 titulo-infantil mt-2">Matheus Emanuel</h1>
+          <p class="subtitulo-infantil mb-2">2 aninhos de muita alegria!</p>
+
+          <!-- Mensagem personalizada com base na senha digitada -->
+          <div class="alert alert-info py-2 chat-balao">
+            Olá, <strong>{{ convidado.nome_grupo }}</strong>! <br />
+            Seu convite é válido para até
+            <strong>{{ convidado.limite_pessoas }}</strong> pessoas.
+          </div>
         </div>
 
-        <form method="POST">
+        <form method="POST" id="formConvite">
           {% csrf_token %}
 
-          <!-- Nome da Família -->
-          <div class="mb-3">
-            <label class="form-label fw-bold">{{ form.familia.label }}</label>
-            {{ form.familia }}
+          <!-- Exibe erros caso tentem burlar o limite de pessoas -->
+          {% if form.quantidade_vinda.errors %}
+          <div class="alert alert-danger py-2">
+            {{ form.quantidade_vinda.errors }}
           </div>
+          {% endif %}
 
           <!-- Resposta Radio Select -->
-          <div class="mb-3">
-            <label class="form-label fw-bold">{{ form.confirmou.label }}</label>
-            <div class="d-flex gap-3">
+          <div class="mb-4 text-center text-sm-start">
+            <label class="form-label fw-bold text-secondary"
+              >{{ form.confirmou.label }}</label
+            >
+            <div
+              class="d-flex gap-3 justify-content-center justify-content-sm-start mt-1"
+            >
               {% for radio in form.confirmou %}
-              <div class="form-check">
+              <div class="form-check form-check-inline campo-radio-custom">
                 {{ radio.tag }}
-                <label class="form-check-label">{{ radio.choice_label }}</label>
+                <label
+                  class="form-check-label fw-bold ms-1"
+                  for="{{ radio.id_for_label }}"
+                >
+                  {{ radio.choice_label }}
+                </label>
               </div>
               {% endfor %}
             </div>
           </div>
 
-          <!-- Quantidade de acompanhantes -->
-          <div class="mb-3">
-            <label class="form-label fw-bold"
-              >{{ form.acompanhantes.label }}</label
-            >
-            {{ form.acompanhantes }}
+          <!-- Bloco Condicional Principal: Só aparece se "Sim" for selecionado -->
+          <div id="blocoPresencaConfirmada" class="secao-condicional">
+            <!-- Quantidade de participantes -->
+            <div class="mb-4">
+              <label class="form-label fw-bold text-secondary"
+                >Quantidade de participantes (incluindo você)</label
+              >
+              {{ form.quantidade_vinda }}
+            </div>
           </div>
 
-          <!-- Nome dos acompanhantes -->
-          <div class="mb-4">
-            <label class="form-label fw-bold"
-              >{{ form.nomes_acompanhantes.label }}</label
-            >
-            {{ form.nomes_acompanhantes }}
-          </div>
-
-          <div class="d-grid">
-            <button type="submit" class="btn btn-confirmar btn-lg">
-              Enviar Resposta
+          <!-- Botões de Ação -->
+          <div class="d-grid gap-2 mt-4">
+            <button type="submit" class="btn btn-confirmar btn-lg shadow-sm">
+              Concluir
             </button>
           </div>
         </form>
       </div>
     </div>
 
-    <script src="https://jsdelivr.net"></script>
+    <!-- Bloco do Pop-up Otimizado -->
+    <div
+      id="modalResposta"
+      class="modal-backdrop-custom {% if sucesso == 'confirmado' or sucesso == 'recusado' %}mostrar{% endif %}"
+    >
+      <div class="card-modal-feedback p-4 text-center">
+        <div class="icone-sucesso-wrapper">
+          <svg
+            class="icone-sucesso"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+          >
+            <polyline points="20 6 9 17 4 12"></polyline>
+          </svg>
+        </div>
+
+        {% if sucesso == "confirmado" %}
+        <h2 class="titulo-modal mt-3">Presença Confirmada!</h2>
+        <p class="texto-modal my-3">
+          Obrigado por confirmar! Mal podemos esperar para comemorar os 2
+          aninhos do Matheus Emanuel com você.
+        </p>
+        {% else %}
+        <h2 class="titulo-modal mt-3">Resposta Registrada!</h2>
+        <p class="texto-modal my-3">
+          Poxa, que pena que você não poderá ir! Agradecemos pelo carinho e por
+          nos avisar.
+        </p>
+        {% endif %}
+
+        <div class="mt-4">
+          <button
+            type="button"
+            id="btnFecharModal"
+            class="btn btn-primary botao-modal-fechar"
+          >
+            OK, entendi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Limite vindo do banco -->
+    <script>
+      const LIMITE_CONVIDADOS = parseInt("{{ convidado.limite_pessoas }}");
+    </script>
+
+    <!-- Script de controle -->
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>
